@@ -1,0 +1,47 @@
+{
+  "name": "keyboard-heatmap",
+  "displayName": "keyboard-heatmap",
+  "description": "Log keystrokes and generate usage heatmap",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.53.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "keyboard-heatmap.printLogs",
+        "title": "Print keyboard-heatmap keypress data"
+      },
+      {
+        "command": "keyboard-heatmap.resetLogs",
+        "title": "Reset keyboard-heatmap keypress data"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.53.0",
+    "@types/node": "^12.11.7",
+    "eslint": "^7.19.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.5.0",
+    "ts-loader": "^8.0.14",
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0"
+  }
+}
