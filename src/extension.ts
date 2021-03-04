@@ -58,6 +58,11 @@ export function activate(context: vscode.ExtensionContext) {
     'keyboard-heatmap.resetLogs',
     () => {
       // @ts-ignore
+      const keys = Object.keys(storage._value)
+      for (let key of keys) {
+        storage.update(key, undefined)
+      }
+
       console.log('keyboard-heatmap logs reset successfull')
     }
   )
