@@ -1,11 +1,12 @@
 import * as vscode from 'vscode'
 import { readFromStorage } from './utils'
+import heatmap from './heatmap'
 
 // reset session data
 export const resetLogs = async (storage: vscode.Memento) => {
-  const keypresses = readFromStorage(storage)
+  const data = readFromStorage(storage)
 
-  const keys = Object.keys(keypresses)
+  const keys = Object.keys(data)
   for (let key of keys) {
     await storage.update(key, undefined)
   }
@@ -15,14 +16,14 @@ export const resetLogs = async (storage: vscode.Memento) => {
 
 // print raw data to console
 export const printLogs = (storage: vscode.Memento) => {
-  const keypresses = readFromStorage(storage)
+  const data = readFromStorage(storage)
 
-  const keys = Object.keys(keypresses)
-  const total = keys.reduce((sum, key) => sum + keypresses[key], 0)
+  const keys = Object.keys(data)
+  const total = keys.reduce((sum, key) => sum + data[key], 0)
 
   for (let key of keys) {
-    const frequence = (keypresses[key] * 100) / total
-    console.log(key, keypresses[key], Math.round(frequence) + '%')
+    const frequence = (data[key] * 100) / total
+    console.log(key, data[key], Math.round(frequence) + '%')
   }
 }
 
@@ -46,21 +47,12 @@ export const displayHeatmap = (storage: vscode.Memento) => {
     )
   }
 
-  panel.webview.html = `<!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Cat Coding</title>
-  </head>
-  <body>
-      <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300" />
-  </body>
-  </html>`
-
   panel.onDidDispose(() => {
     panel = null
   }, null)
+
+  const data = readFromStorage(storage)
+  panel.webview.html = heatmap.render(data)
 }
 
 export default {

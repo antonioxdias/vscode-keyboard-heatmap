@@ -1,5 +1,7 @@
 import * as vscode from 'vscode'
 
+export type TKeyPresses = { [key: string]: number }
+
 // returns a copy the the values in storage
 export const readFromStorage = (storage: vscode.Memento) => {
   // @ts-ignore
@@ -9,5 +11,5 @@ export const readFromStorage = (storage: vscode.Memento) => {
       [key]: Number(value) || 0
     }),
     {}
-  ) as { [key: string]: number }
+  ) as TKeyPresses
 }
