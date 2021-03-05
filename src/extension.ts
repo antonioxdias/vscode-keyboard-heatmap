@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { logger } from './logger'
-import { resetLogs, printLogs } from './commands'
+import { resetLogs, printLogs, displayHeatmap } from './commands'
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Activate keyboard-heatmap logger. Type away!')
@@ -19,6 +19,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     vscode.commands.registerCommand('keyboard-heatmap.printLogs', () =>
       printLogs(storage)
+    ),
+
+    vscode.commands.registerCommand('keyboard-heatmap.displayHeatmap', () =>
+      displayHeatmap(storage)
     )
   )
 }

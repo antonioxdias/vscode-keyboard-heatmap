@@ -17,11 +17,15 @@
     "commands": [
       {
         "command": "keyboard-heatmap.printLogs",
-        "title": "Print keyboard-heatmap keypress data"
+        "title": "keyboard-heatmap: Print keypress data"
       },
       {
         "command": "keyboard-heatmap.resetLogs",
-        "title": "Reset keyboard-heatmap keypress data"
+        "title": "keyboard-heatmap: Reset keypress data"
+      },
+      {
+        "command": "keyboard-heatmap.displayHeatmap",
+        "title": "keyboard-heatmap: Display keypress heatmap"
       }
     ]
   },
