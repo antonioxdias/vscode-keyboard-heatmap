@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { readFromStorage } from './utils'
-import heatmap from './heatmap'
+import webViewContent from './html'
 
 // reset session data
 export const resetLogs = async (storage: vscode.Memento) => {
@@ -30,7 +30,10 @@ export const printLogs = (storage: vscode.Memento) => {
 let panel: vscode.WebviewPanel | null = null
 
 // generate and display heatmap in a webview
-export const displayHeatmap = (storage: vscode.Memento) => {
+export const displayHeatmap = (
+  storage: vscode.Memento,
+  extensionPath: string
+) => {
   const columnToShowIn =
     (vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
@@ -43,7 +46,7 @@ export const displayHeatmap = (storage: vscode.Memento) => {
       'keyboard-heatmap',
       'Keyboard Heatmap',
       columnToShowIn,
-      {}
+      { enableScripts: true }
     )
   }
 
@@ -51,8 +54,10 @@ export const displayHeatmap = (storage: vscode.Memento) => {
     panel = null
   }, null)
 
+  panel.webview.html = webViewContent(panel.webview, extensionPath)
+
   const data = readFromStorage(storage)
-  panel.webview.html = heatmap.render(data)
+  panel.webview.postMessage({ keypresses: data })
 }
 
 export default {
