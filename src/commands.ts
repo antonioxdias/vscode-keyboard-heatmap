@@ -1,6 +1,8 @@
 import * as vscode from 'vscode'
-import { readFromStorage } from './utils'
+import { readFromStorage, parseKle } from './utils'
 import webViewContent from './html'
+
+const defaultLayout = require('../media/default-keyboard-layout.json')
 
 // reset session data
 export const resetLogs = async (storage: vscode.Memento) => {
@@ -56,8 +58,9 @@ export const displayHeatmap = (
 
   panel.webview.html = webViewContent(panel.webview, extensionPath)
 
-  const data = readFromStorage(storage)
-  panel.webview.postMessage({ keypresses: data })
+  const keypresses = readFromStorage(storage)
+  const keyboard = parseKle(defaultLayout)
+  panel.webview.postMessage({ keypresses, keyboard })
 }
 
 export default {

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode'
+import * as kle from '@ijprest/kle-serial'
 
 export type TKeyPresses = { [key: string]: number }
 
@@ -12,6 +13,14 @@ export const readFromStorage = (storage: vscode.Memento) => {
     }),
     {}
   ) as TKeyPresses
+}
+
+export const parseKle = (layout: any[]) => {
+  try {
+    return kle.Serial.deserialize(layout)
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export const getNonce = () => {

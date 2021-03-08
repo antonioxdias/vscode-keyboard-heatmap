@@ -1,17 +1,6 @@
 import * as vscode from 'vscode'
-import * as kle from '@ijprest/kle-serial'
 import * as path from 'path'
 import { getNonce } from './utils'
-
-const defaultLayout = require('../media/default-keyboard-layout.json')
-
-const parseKle = (layout: any[]) => {
-  try {
-    return kle.Serial.deserialize(layout)
-  } catch (e) {
-    console.error(e)
-  }
-}
 
 const getFileUri = (
   webview: vscode.Webview,
@@ -25,25 +14,8 @@ const getFileUri = (
 const canvasContainerId = 'canvas-container'
 
 const webviewContent = (webview: vscode.Webview, extensionPath: string) => {
-  let content = ''
-
-  // ToDo: use user provided custom layout
-  const keyboard = parseKle(defaultLayout)
-  if (!keyboard) {
-    // ToDo: if layout fails, render default layout and error message
-    content = `
-      <h1>Failed to load keyboard-layout-editor data. Please review your json file.</h1>
-    `
-  } else {
-    const nonce = getNonce()
-    const rendererUri = getFileUri(webview, extensionPath, 'renderer.js')
-    content = `
-      <h1 class="title-success">Hurray!</h1>
-      <div id="${canvasContainerId}"></div>
-      <script nonce="${nonce}" src="${rendererUri}"></script>
-    `
-  }
-
+  const nonce = getNonce()
+  const rendererUri = getFileUri(webview, extensionPath, 'renderer.js')
   const stylesUri = getFileUri(webview, extensionPath, 'styles.css')
 
   return `<!DOCTYPE html>
@@ -59,7 +31,9 @@ const webviewContent = (webview: vscode.Webview, extensionPath: string) => {
         <title>Cat Coding</title>
       </head>
       <body>
-        ${content}
+        <h1 id="title"></h1>
+        <div id="${canvasContainerId}"></div>
+        <script nonce="${nonce}" src="${rendererUri}"></script>
       </body>
     </html>
   `
