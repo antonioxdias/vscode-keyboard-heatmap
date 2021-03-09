@@ -1,18 +1,58 @@
 import * as vscode from 'vscode'
 import * as kle from '@ijprest/kle-serial'
 
-export type TKeyPresses = { [key: string]: number }
+export enum EKeysVariant {
+  all,
+  alphas,
+  symbols,
+  alphaSymbols
+}
 
-// returns a copy the the values in storage
-export const readFromStorage = (storage: vscode.Memento) => {
+// key -> pressed key; value: no. of times pressed; weight: percentage from total
+export type TKeyPresses = { [key: string]: { value: number; weight: number } }
+
+const alphas = 'abcdefghijklmnopqrstuvwxyz'.split('')
+const symbols = '|!@#$%&/\'"*{}?=+<>[]^~`(),.-_;:'.split('')
+const xtra = ['space', 'enter', 'tab']
+
+const charsForVariant = (variant: EKeysVariant) => {
+  switch (variant) {
+    case EKeysVariant.alphas:
+      return alphas
+    case EKeysVariant.symbols:
+      return symbols
+    case EKeysVariant.alphaSymbols:
+      return [...alphas, ...symbols]
+    default:
+      return [...alphas, ...symbols, ...xtra]
+  }
+}
+
+// returns a copy the the values in storage with usage frequencies
+// for given chars dictionary
+export const readFromStorage = (
+  storage: vscode.Memento,
+  variant: EKeysVariant
+) => {
   // @ts-ignore
-  return Object.entries(storage._value).reduce(
+  const storageData = Object.entries(storage._value).reduce(
     (obj, [key, value]) => ({
       ...obj,
       [key]: Number(value) || 0
     }),
     {}
-  ) as TKeyPresses
+  ) as { [key: string]: number }
+
+  const chars = charsForVariant(variant)
+  const keys = Object.keys(storageData).filter((key) => chars.includes(key))
+  const total = keys.reduce((sum, key) => sum + storageData[key], 0)
+
+  const data: TKeyPresses = {}
+  for (let key of keys) {
+    const frequence = (storageData[key] * 100) / total
+    data[key] = { value: storageData[key], weight: Math.round(frequence) }
+  }
+  return data
 }
 
 export const parseKle = (layout: any[]) => {

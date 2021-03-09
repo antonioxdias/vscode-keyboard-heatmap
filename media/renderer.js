@@ -53,10 +53,10 @@ const render = (data, keyboard) => {
 
 window.addEventListener('message', (ev) => {
   const { keypresses, keyboard } = ev.data
-
   if (keypresses) {
+    const data = weightData(keypresses, variant)
     if (keyboard) {
-      render(keypresses, keyboard)
+      render(data, keyboard)
     } else {
       renderLoadFail()
     }

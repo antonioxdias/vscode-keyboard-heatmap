@@ -1,12 +1,12 @@
 import * as vscode from 'vscode'
-import { readFromStorage, parseKle } from './utils'
+import { EKeysVariant, readFromStorage, parseKle } from './utils'
 import webViewContent from './html'
 
 const defaultLayout = require('../media/default-keyboard-layout.json')
 
 // reset session data
 export const resetLogs = async (storage: vscode.Memento) => {
-  const data = readFromStorage(storage)
+  const data = readFromStorage(storage, EKeysVariant.all)
 
   const keys = Object.keys(data)
   for (let key of keys) {
@@ -18,15 +18,13 @@ export const resetLogs = async (storage: vscode.Memento) => {
 
 // print raw data to console
 export const printLogs = (storage: vscode.Memento) => {
-  const data = readFromStorage(storage)
-
-  const keys = Object.keys(data)
-  const total = keys.reduce((sum, key) => sum + data[key], 0)
-
-  for (let key of keys) {
-    const frequence = (data[key] * 100) / total
-    console.log(key, data[key], Math.round(frequence) + '%')
-  }
+  console.log('all', readFromStorage(storage, EKeysVariant.all))
+  console.log('alphas only', readFromStorage(storage, EKeysVariant.alphas))
+  console.log('symbols only', readFromStorage(storage, EKeysVariant.symbols))
+  console.log(
+    'symbols + alphas',
+    readFromStorage(storage, EKeysVariant.alphaSymbols)
+  )
 }
 
 let panel: vscode.WebviewPanel | null = null
@@ -58,7 +56,7 @@ export const displayHeatmap = (
 
   panel.webview.html = webViewContent(panel.webview, extensionPath)
 
-  const keypresses = readFromStorage(storage)
+  const keypresses = readFromStorage(storage, EKeysVariant.alphaSymbols)
   const keyboard = parseKle(defaultLayout)
   panel.webview.postMessage({ keypresses, keyboard })
 }

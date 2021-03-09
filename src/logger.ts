@@ -14,7 +14,7 @@ export const logger = async (
   }
 
   for (const change of contentChanges) {
-    const text = change.text
+    const text = change.text.toLowerCase()
 
     // Ignore stringified json text
     if (text.startsWith('{\n')) {
