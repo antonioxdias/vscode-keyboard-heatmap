@@ -37,43 +37,43 @@ const render = (data, keyboard) => {
   console.log(data)
 
   // draw keys
-  // for (let key of keyboard.keys) {
-  //   // save clean context state
-  //   ctx.save()
+  for (let key of keyboard.keys) {
+    // save clean context state
+    ctx.save()
 
-  //   // rotate context if key is rotated
-  //   if (key.rotation_angle !== 0) {
-  //     console.log(
-  //       key.labels[key.labels.length - 1],
-  //       key.rotation_angle,
-  //       key.rotation_x,
-  //       key.rotation_y,
-  //       (key.rotation_angle * Math.PI) / 180
-  //     )
-  //     // ctx.translate(key.rotation_x, key.rotation_y)
-  //     ctx.translate(key.rotation_x * unit - unit, key.rotation_y * unit - unit)
-  //     ctx.rotate((key.rotation_angle * Math.PI) / 180)
-  //     ctx.fillStyle = 'black'
-  //     ctx.fillRect(0, 0, key.width * unit, key.height * unit)
-  //     // ctx.fillStyle = 'rgba(100, 255, 100, 0.8)'
-  //     // ctx.fillRect(0, 0, key.width * unit, key.height * unit)
-  //     // ctx.fillStyle = 'rgba(100, 255, 100, 0.8)'
-  //     // ctx.fillRect(0, 0, key.width * unit, key.height * unit)
-  //     // ctx.fillStyle = 'rgba(100, 255, 255, 0.8)'
-  //     // ctx.fillRect(
-  //     //   key.rotation_x * unit,
-  //     //   key.rotation_y * unit,
-  //     //   key.width * unit,
-  //     //   key.height * unit
-  //     // )
-  //     // ctx.fillStyle = 'rgba(100, 100, 255, 0.8)'
-  //     // ctx.fillRect(
-  //     //   key.x * unit,
-  //     //   key.y * unit,
-  //     //   key.width * unit,
-  //     //   key.height * unit
-  //     // )
-  //   }
+    //   // rotate context if key is rotated
+    //   if (key.rotation_angle !== 0) {
+    //     console.log(
+    //       key.labels[key.labels.length - 1],
+    //       key.rotation_angle,
+    //       key.rotation_x,
+    //       key.rotation_y,
+    //       (key.rotation_angle * Math.PI) / 180
+    //     )
+    //     // ctx.translate(key.rotation_x, key.rotation_y)
+    //     ctx.translate(key.rotation_x * unit - unit, key.rotation_y * unit - unit)
+    //     ctx.rotate((key.rotation_angle * Math.PI) / 180)
+    //     ctx.fillStyle = 'black'
+    //     ctx.fillRect(0, 0, key.width * unit, key.height * unit)
+    //     // ctx.fillStyle = 'rgba(100, 255, 100, 0.8)'
+    //     // ctx.fillRect(0, 0, key.width * unit, key.height * unit)
+    //     // ctx.fillStyle = 'rgba(100, 255, 100, 0.8)'
+    //     // ctx.fillRect(0, 0, key.width * unit, key.height * unit)
+    //     // ctx.fillStyle = 'rgba(100, 255, 255, 0.8)'
+    //     // ctx.fillRect(
+    //     //   key.rotation_x * unit,
+    //     //   key.rotation_y * unit,
+    //     //   key.width * unit,
+    //     //   key.height * unit
+    //     // )
+    //     // ctx.fillStyle = 'rgba(100, 100, 255, 0.8)'
+    //     // ctx.fillRect(
+    //     //   key.x * unit,
+    //     //   key.y * unit,
+    //     //   key.width * unit,
+    //     //   key.height * unit
+    //     // )
+    //   }
 
     // draw border
     ctx.fillStyle = 'rgba(100, 100, 100, 0.8)'
