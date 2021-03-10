@@ -2,7 +2,8 @@ import * as vscode from 'vscode'
 import { EKeysVariant, readFromStorage, parseKle } from './utils'
 import webViewContent from './html'
 
-const defaultLayout = require('../media/default-keyboard-layout.json')
+// const defaultLayout = require('../media/default-keyboard-layout.json')
+const defaultLayout = require('../media/34-keyboard-layout.json')
 
 // reset session data
 export const resetLogs = async (storage: vscode.Memento) => {
